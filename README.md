@@ -1,4 +1,4 @@
-This basic web application was written for a class assignment. It should not be used for any purpose other than educational.
+This basic web application was written for a class assignment. It is provided for educational purposes only.
 
 ## Pre-requisites
 
