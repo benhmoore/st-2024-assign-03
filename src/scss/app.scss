@@ -1,0 +1,13 @@
+$primary: rgb(47, 127, 130);
+$bg-dark: $primary;
+$border-radius: 0.2em;
+@import "node_modules/bootstrap/scss/bootstrap";
+
+.form-control {
+    @extend .rounded-0;
+}
+
+.bg-primary-light {
+    @extend .bg-primary, .text-dark;
+    background-color: rgba($primary, 0.3) !important;
+}
