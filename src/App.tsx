@@ -1,9 +1,13 @@
-// import { useState } from 'react'
-import { BsHash, BsInfoCircle } from "react-icons/bs";
 import "./scss/app.scss";
 import BMICalculator from "./components/BMICalculator";
+import { getBMIDesignation } from "./data/bmi_calculator";
+
+import { BsHash, BsInfoCircle } from "react-icons/bs";
+import { useState } from "react";
+import { BiArrowBack } from "react-icons/bi";
 
 function App() {
+    const [bmiValue, setBmiValue] = useState<string>("");
     return (
         <div className="container">
             <div className="alert alert-secondary mt-5 mb-0">
@@ -43,15 +47,10 @@ function App() {
                             </h4>
                         </div>
                         <div className="card-body">
-                            <BMICalculator />
-                        </div>
-                        <div className="card-footer justify-content-end align-items-end d-flex p-3">
-                            <button
-                                type="submit"
-                                className="btn btn-primary justify-content-end"
-                            >
-                                Calculate
-                            </button>
+                            <BMICalculator
+                                setBmiValue={setBmiValue}
+                                bmiValue={bmiValue}
+                            />
                         </div>
                     </div>
                 </div>
@@ -59,11 +58,25 @@ function App() {
                     <div className="card mt-3 bg-primary-light text-light">
                         <div className="card-body pb-0">
                             <div className="alert">
-                                <h5>Underweight</h5>
+                                <h5>
+                                    {bmiValue === "" ? (
+                                        <>
+                                            <BiArrowBack
+                                                className="me-2"
+                                                style={{ marginTop: "-3px" }}
+                                            />
+                                            Enter a Value
+                                        </>
+                                    ) : (
+                                        getBMIDesignation(parseFloat(bmiValue))
+                                            .designation
+                                    )}
+                                </h5>
                                 <p>
-                                    A BMI of less than 18.5 indicates that you
-                                    are underweight, which means you may be
-                                    malnourished or have some sort of illness.
+                                    {
+                                        getBMIDesignation(parseFloat(bmiValue))
+                                            .description
+                                    }
                                 </p>
                             </div>
                         </div>
