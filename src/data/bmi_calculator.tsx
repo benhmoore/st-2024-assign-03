@@ -19,8 +19,8 @@ const getBMIDesignation = (bmi: number) => {
     let designation: BMICategoryType = "Cannot Calculate";
     if (bmi < 18.5 && bmi >= 0) {
         designation = "Underweight";
+        // Add boundary shift of 0.1 here for testing
     } else if (bmi >= 18.5 && bmi <= 24.9) {
-        /* Add boundary shift of 0.1 here for testing */
         designation = "Normal Weight";
     } else if (bmi >= 25 && bmi <= 29.9) {
         designation = "Overweight";

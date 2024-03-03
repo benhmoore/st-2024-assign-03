@@ -3,7 +3,7 @@ import { getBMIDesignation } from "../data/bmi_calculator";
 
 describe("BMI Designation Calculator", () => {
     // Testing for Underweight
-    it("returns Cannot Calculate for BMI at 0 (minimum)", () => {
+    it("returns Underweight for BMI at 0 (minimum)", () => {
         expect(getBMIDesignation(0).designation).toBe("Underweight");
     });
 
@@ -11,12 +11,16 @@ describe("BMI Designation Calculator", () => {
         expect(getBMIDesignation(-0.1).designation).toBe("Cannot Calculate");
     });
 
-    it("returns Underweight for BMI at 9.3 (midpoint of 0 and 18.5)", () => {
-        expect(getBMIDesignation(9.25).designation).toBe("Underweight");
+    it("returns Underweight for BMI at 9.3 (point between 0 and 18.5)", () => {
+        expect(getBMIDesignation(9.2).designation).toBe("Underweight");
     });
 
-    it("returns Normal Weight for BMI just above 18.5 (epsilon = 0.1)", () => {
-        expect(getBMIDesignation(18.6).designation).toBe("Normal Weight");
+    it("returns Underweight for BMI at 18.49 (maximum, epsilon = 0.1)", () => {
+        expect(getBMIDesignation(18.4).designation).toBe("Underweight");
+    });
+
+    it("returns Normal Weight for BMI just above 18.49 (epsilon = 0.1)", () => {
+        expect(getBMIDesignation(18.5).designation).toBe("Normal Weight");
     });
 
     // Testing for Normal Weight
@@ -26,6 +30,10 @@ describe("BMI Designation Calculator", () => {
 
     it("returns Underweight for BMI just below 18.5 (epsilon = 0.1)", () => {
         expect(getBMIDesignation(18.4).designation).toBe("Underweight");
+    });
+
+    it("returns Normal Weight for BMI at 23 (point between 18.5 and 25)", () => {
+        expect(getBMIDesignation(23).designation).toBe("Normal Weight");
     });
 
     it("returns Normal Weight for BMI at 24.9 (maximum)", () => {
@@ -45,6 +53,10 @@ describe("BMI Designation Calculator", () => {
         expect(getBMIDesignation(24.9).designation).toBe("Normal Weight");
     });
 
+    it("returns Overweight for BMI at 28 (point between 25 and 29.9)", () => {
+        expect(getBMIDesignation(28).designation).toBe("Overweight");
+    });
+
     it("returns Overweight for BMI at 29.9 (maximum)", () => {
         expect(getBMIDesignation(29.9).designation).toBe("Overweight");
     });
@@ -62,7 +74,11 @@ describe("BMI Designation Calculator", () => {
         expect(getBMIDesignation(29.9).designation).toBe("Overweight");
     });
 
-    it("returns Obesity for BMI at 100", () => {
-        expect(getBMIDesignation(100).designation).toBe("Obesity");
+    // Since there is no specific maximum for BMI, we can test a few
+    // high values to ensure that the function returns Obesity for all
+    it("returns Obesity for 30 =< BMI < 1000", () => {
+        for (let i = 30; i < 1000; i += 10) {
+            expect(getBMIDesignation(i).designation).toBe("Obesity");
+        }
     });
 });
