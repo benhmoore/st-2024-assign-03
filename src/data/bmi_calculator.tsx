@@ -15,7 +15,11 @@ const BMICategories: Record<BMICategoryType, string> = {
   Obesity: "increases various health risks.",
 };
 
-const getBMIDesignation = (bmi: number) => {
+const getBMIDesignation = (bmi: number | string) => {
+  if (typeof bmi === "string" || isNaN(bmi as number)) {
+    return { designation: "Cannot Calculate" };
+  }
+
   let designation: BMICategoryType = "Cannot Calculate";
   if (bmi < 18.5 && bmi >= 0) {
     designation = "Underweight";
